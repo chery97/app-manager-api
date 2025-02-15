@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { AuthModule } from './auth/auth.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import * as process from 'process';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { ManagerModule } from './api/manager/manager.module';
 
 @Module({
   imports: [
@@ -27,7 +27,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
         charset: 'utf8mb4_unicode_ci',
       }),
     }),
-    AuthModule,
+    ManagerModule,
   ],
   controllers: [AppController],
   providers: [AppService],

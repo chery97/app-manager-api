@@ -1,11 +1,11 @@
 import { Module } from '@nestjs/common';
-import { AuthService } from './auth.service';
-import { AuthController } from './auth.controller';
+import { ManagerService } from './manager.service';
+import { ManagerController } from './manager.controller';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
-import { JwtStrategy } from './strategy/jwt.strategy';
-import { RefreshTokenStrategy } from './strategy/refresh.strategy';
-import { ConfigModule, ConfigService } from '@nestjs/config';
+import { JwtStrategy } from '../../auth/strategy/jwt.strategy';
+import { RefreshTokenStrategy } from '../../auth/strategy/refresh.strategy';
 
 @Module({
   imports: [
@@ -22,7 +22,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
       }),
     }),
   ],
-  providers: [AuthService, JwtStrategy, RefreshTokenStrategy],
-  controllers: [AuthController],
+  controllers: [ManagerController],
+  providers: [ManagerService, JwtStrategy, RefreshTokenStrategy],
 })
-export class AuthModule {}
+export class ManagerModule {}
