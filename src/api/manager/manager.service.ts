@@ -1,28 +1,87 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import {
+  HttpException,
+  HttpStatus,
+  Injectable,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
+import { InjectEntityManager } from '@nestjs/typeorm';
+import { EntityManager } from 'typeorm';
+import { Manager } from './entities/manager.entity';
+import * as bcrypt from 'bcrypt';
+import { ManagerCreateDto } from './dto/manager-create.dto';
+import { ManagerSearchDto } from './dto/manager-search.dto';
 
 @Injectable()
 export class ManagerService {
   constructor(
     private jwtService: JwtService,
     private configService: ConfigService,
+    @InjectEntityManager() private readonly entityManager: EntityManager,
   ) {}
 
-  async login(user: any) {
-    const payload = { username: user.username, sub: user.userId };
+  async join(dto: ManagerCreateDto) {
+    const isExist = await this.entityManager.findOneBy(Manager, {
+      id: dto.id,
+    });
 
+    if (isExist) {
+      throw new HttpException(
+        '아이디가 이미 존재합니다.',
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+    const saltRounds = 10; // salt 값 설정
+    const salt = await bcrypt.genSalt(saltRounds);
+    dto.password = await bcrypt.hash(dto.password, salt);
+    return await this.entityManager.save(Manager, dto);
+  }
+
+  async login(dto: ManagerSearchDto) {
+    const memberData = await this.entityManager.findOneBy(Manager, {
+      id: dto.id,
+    });
+
+    if (!memberData) {
+      throw new HttpException(
+        '로그인 정보가 없습니다.',
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+
+    const isValidPassword = await bcrypt.compare(
+      dto.password,
+      memberData.password,
+    );
+    if (!isValidPassword) {
+      throw new HttpException(
+        '아이디 또는 비밀번호가 일치하지 않습니다.',
+        HttpStatus.UNAUTHORIZED,
+      );
+    }
+
+    const payload = { id: dto.id, password: dto.password };
+
+    // [Jay] accessToken, refreshToken 생성
     const accessToken = this.jwtService.sign(payload, {
       secret: this.configService.get<string>('ACCESS_SECRET_KEY'),
       expiresIn: this.configService.get<string>('ACCESS_EXPIRE_IN'),
     });
-
     const refreshToken = this.jwtService.sign(payload, {
       secret: this.configService.get<string>('REFRESH_SECRET_KEY'),
       expiresIn: this.configService.get<string>('REFRESH_EXPIRE_IN'),
     });
 
-    // @todo: Refresh Token을 DB에 저장
+    // [Jay] 로그인시마다 refreshToken DB에 업데이트
+    await this.entityManager.update(
+      Manager,
+      {
+        sno: memberData.sno,
+      },
+      { refreshToken },
+    );
+
     return {
       access_token: accessToken,
       refresh_token: refreshToken,

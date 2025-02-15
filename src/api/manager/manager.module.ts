@@ -6,6 +6,8 @@ import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
 import { JwtStrategy } from '../../auth/strategy/jwt.strategy';
 import { RefreshTokenStrategy } from '../../auth/strategy/refresh.strategy';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { Manager } from './entities/manager.entity';
 
 @Module({
   imports: [
@@ -21,6 +23,7 @@ import { RefreshTokenStrategy } from '../../auth/strategy/refresh.strategy';
         }, // Access Token 만료시간
       }),
     }),
+    TypeOrmModule.forFeature([Manager]),
   ],
   controllers: [ManagerController],
   providers: [ManagerService, JwtStrategy, RefreshTokenStrategy],
