@@ -5,6 +5,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import * as process from 'process';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UsersModule } from './api/users/users.module';
+import { PushModule } from './api/push/push.module';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { UsersModule } from './api/users/users.module';
       }),
     }),
     UsersModule,
+    PushModule,
   ],
   controllers: [AppController],
   providers: [AppService],
