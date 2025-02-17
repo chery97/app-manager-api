@@ -22,6 +22,17 @@ export class UsersService {
     @InjectEntityManager() private readonly entityManager: EntityManager,
   ) {}
 
+  async findAll(pageSize: number, page: number) {
+    const [data, totalCnt] = await this.entityManager.findAndCount(Users, {
+      take: pageSize,
+      skip: (page - 1) * pageSize,
+    });
+    return {
+      data,
+      totalCnt,
+    };
+  }
+
   async join(dto: UsersCreateDto) {
     return this.entityManager.transaction(async (manager) => {
       const isExist = await manager.findOneBy(Users, {
