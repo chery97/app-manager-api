@@ -1,4 +1,4 @@
-export enum MANAGER_TYPE {
+export enum USER_TYPE {
   ADMIN = 'admin',
   PARTNER = 'partner',
 }

@@ -1,4 +1,4 @@
-import { MANAGER_TYPE } from '../../../common/enum/enum';
+import { USER_TYPE } from '../../../common/enum/enum';
 import {
   CreateDateColumn,
   PrimaryColumn,
@@ -26,8 +26,8 @@ export class Users {
   password: string;
 
   @Column()
-  @IsEnum(MANAGER_TYPE)
-  managerType: MANAGER_TYPE = MANAGER_TYPE.PARTNER;
+  @IsEnum(USER_TYPE)
+  userType: USER_TYPE = USER_TYPE.PARTNER;
 
   @Column()
   @IsNumber()
@@ -35,15 +35,15 @@ export class Users {
 
   @Column()
   @IsString()
-  managerName: string;
+  userName: string;
 
   @Column()
   @IsString()
-  managerTel: string;
+  userTel: string;
 
   @Column()
   @IsString()
-  managerEmail: string;
+  userEmail: string;
 
   @Column()
   @IsString()
