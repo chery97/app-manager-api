@@ -10,8 +10,8 @@ import {
 import { Exclude } from 'class-transformer';
 import { IsEnum, IsNumber, IsOptional, IsString } from 'class-validator';
 
-@Entity('gs_manager')
-export class Manager {
+@Entity('gs_users')
+export class Users {
   @PrimaryGeneratedColumn('increment')
   @PrimaryColumn()
   @Exclude({ toClassOnly: true })

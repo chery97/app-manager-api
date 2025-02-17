@@ -1,5 +1,5 @@
 -- 관리자 테이블
-CREATE TABLE gs_manager (
+CREATE TABLE gs_users (
     `sno` INT NOT NULL AUTO_INCREMENT ,
     `id` VARCHAR(20) NOT NULL COMMENT '회원 ID' ,
     `password` VARCHAR(100) NOT NULL COMMENT '회원 비밀번호(암호화)' ,

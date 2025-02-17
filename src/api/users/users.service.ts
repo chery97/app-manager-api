@@ -8,21 +8,21 @@ import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import { InjectEntityManager } from '@nestjs/typeorm';
 import { EntityManager } from 'typeorm';
-import { Manager } from './entities/manager.entity';
+import { Users } from './entities/users.entity';
 import * as bcrypt from 'bcrypt';
-import { ManagerCreateDto } from './dto/manager-create.dto';
-import { ManagerSearchDto } from './dto/manager-search.dto';
+import { UsersCreateDto } from './dto/users-create.dto';
+import { UsersSearchDto } from './dto/users-search.dto';
 
 @Injectable()
-export class ManagerService {
+export class UsersService {
   constructor(
     private jwtService: JwtService,
     private configService: ConfigService,
     @InjectEntityManager() private readonly entityManager: EntityManager,
   ) {}
 
-  async join(dto: ManagerCreateDto) {
-    const isExist = await this.entityManager.findOneBy(Manager, {
+  async join(dto: UsersCreateDto) {
+    const isExist = await this.entityManager.findOneBy(Users, {
       id: dto.id,
     });
 
@@ -35,11 +35,11 @@ export class ManagerService {
     const saltRounds = 10; // salt 값 설정
     const salt = await bcrypt.genSalt(saltRounds);
     dto.password = await bcrypt.hash(dto.password, salt);
-    return await this.entityManager.save(Manager, dto);
+    return await this.entityManager.save(Users, dto);
   }
 
-  async login(dto: ManagerSearchDto) {
-    const memberData = await this.entityManager.findOneBy(Manager, {
+  async login(dto: UsersSearchDto) {
+    const memberData = await this.entityManager.findOneBy(Users, {
       id: dto.id,
     });
 
@@ -75,7 +75,7 @@ export class ManagerService {
 
     // [Jay] 로그인시마다 refreshToken DB에 업데이트
     await this.entityManager.update(
-      Manager,
+      Users,
       {
         sno: memberData.sno,
       },

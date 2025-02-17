@@ -1,6 +1,6 @@
 import { IsString } from 'class-validator';
 
-export class ManagerSearchDto {
+export class UsersSearchDto {
   @IsString()
   id: string;
 

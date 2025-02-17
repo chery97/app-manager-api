@@ -4,7 +4,7 @@ import { AppService } from './app.service';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import * as process from 'process';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { ManagerModule } from './api/manager/manager.module';
+import { UsersModule } from './api/users/users.module';
 
 @Module({
   imports: [
@@ -27,7 +27,7 @@ import { ManagerModule } from './api/manager/manager.module';
         charset: 'utf8mb4_unicode_ci',
       }),
     }),
-    ManagerModule,
+    UsersModule,
   ],
   controllers: [AppController],
   providers: [AppService],

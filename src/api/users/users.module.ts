@@ -1,13 +1,13 @@
 import { Module } from '@nestjs/common';
-import { ManagerService } from './manager.service';
-import { ManagerController } from './manager.controller';
+import { UsersService } from './users.service';
+import { UsersController } from './users.controller';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
 import { JwtStrategy } from '../../auth/strategy/jwt.strategy';
 import { RefreshTokenStrategy } from '../../auth/strategy/refresh.strategy';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Manager } from './entities/manager.entity';
+import { Users } from './entities/users.entity';
 
 @Module({
   imports: [
@@ -23,9 +23,9 @@ import { Manager } from './entities/manager.entity';
         }, // Access Token 만료시간
       }),
     }),
-    TypeOrmModule.forFeature([Manager]),
+    TypeOrmModule.forFeature([Users]),
   ],
-  controllers: [ManagerController],
-  providers: [ManagerService, JwtStrategy, RefreshTokenStrategy],
+  controllers: [UsersController],
+  providers: [UsersService, JwtStrategy, RefreshTokenStrategy],
 })
-export class ManagerModule {}
+export class UsersModule {}
