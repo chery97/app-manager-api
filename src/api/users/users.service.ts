@@ -27,9 +27,16 @@ export class UsersService {
       take: pageSize,
       skip: (page - 1) * pageSize,
     });
+    let totalPage = totalCnt / pageSize;
+
+    if (!Number.isInteger(totalPage)) {
+      totalPage = Math.ceil(totalPage);
+    }
+
     return {
       items,
       totalCnt,
+      totalPage,
     };
   }
 

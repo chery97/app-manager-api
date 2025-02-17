@@ -8,8 +8,8 @@ export class UsersController {
 
   @Get()
   async findAll(@Query() query: { pageSize?: string; page?: string }) {
-    const pageSize = query.pageSize ? parseInt(query?.pageSize) : 10;
-    const page = query?.page ? parseInt(query?.page) : 1;
+    const pageSize = query?.pageSize ? parseInt(query.pageSize) : 10;
+    const page = query?.page ? parseInt(query.page) : 1;
     return this.usersService.findAll(pageSize, page);
   }
 
