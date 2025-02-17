@@ -16,6 +16,8 @@
     "noImplicitAny": false,
     "strictBindCallApply": false,
     "forceConsistentCasingInFileNames": false,
-    "noFallthroughCasesInSwitch": false
+    "noFallthroughCasesInSwitch": false,
+    "resolveJsonModule": true, // TypeScript가 JSON 파일을 import할 수 있도록 허용
+    "esModuleInterop": true // CommonJS 모듈을 ES6 방식으로 가져올 수 있도록 지원
   }
 }
