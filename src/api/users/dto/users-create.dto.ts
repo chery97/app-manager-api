@@ -8,19 +8,19 @@ export class UsersCreateDto {
   @IsString()
   password: string;
 
-  // @IsEnum(MANAGER_TYPE)
-  // @IsOptional()
-  // managerType: MANAGER_TYPE = MANAGER_TYPE.PARTNER;
-  //
-  // @IsNumber()
-  // partnerSno: number;
-  //
-  // @IsString()
-  // managerName: string;
-  //
-  // @IsString()
-  // managerTel: string;
-  //
-  // @IsString()
-  // managerEmail: string;
+  @IsEnum(USER_TYPE)
+  @IsOptional()
+  managerType: USER_TYPE = USER_TYPE.PARTNER;
+
+  @IsNumber()
+  partnerSno: number;
+
+  @IsString()
+  userName: string;
+
+  @IsString()
+  userTel: string;
+
+  @IsString()
+  userEmail: string;
 }

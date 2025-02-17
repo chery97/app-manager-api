@@ -12,6 +12,7 @@ import { Users } from './entities/users.entity';
 import * as bcrypt from 'bcrypt';
 import { UsersCreateDto } from './dto/users-create.dto';
 import { UsersSearchDto } from './dto/users-search.dto';
+import { UserInfo } from '../user-info/entities/user-info.entity';
 
 @Injectable()
 export class UsersService {
@@ -22,20 +23,32 @@ export class UsersService {
   ) {}
 
   async join(dto: UsersCreateDto) {
-    const isExist = await this.entityManager.findOneBy(Users, {
-      id: dto.id,
-    });
+    return this.entityManager.transaction(async (manager) => {
+      const isExist = await manager.findOneBy(Users, {
+        id: dto.id,
+      });
 
-    if (isExist) {
-      throw new HttpException(
-        '아이디가 이미 존재합니다.',
-        HttpStatus.BAD_REQUEST,
-      );
-    }
-    const saltRounds = 10; // salt 값 설정
-    const salt = await bcrypt.genSalt(saltRounds);
-    dto.password = await bcrypt.hash(dto.password, salt);
-    return await this.entityManager.save(Users, dto);
+      if (isExist) {
+        throw new HttpException(
+          '아이디가 이미 존재합니다.',
+          HttpStatus.BAD_REQUEST,
+        );
+      }
+      const saltRounds = 10; // salt 값 설정
+      const salt = await bcrypt.genSalt(saltRounds);
+      dto.password = await bcrypt.hash(dto.password, salt);
+      const user = await manager.save(Users, dto);
+
+      const userInfo = new UserInfo();
+      userInfo.sno = user?.sno;
+      userInfo.name = user?.userName;
+      userInfo.email = user?.userEmail;
+      userInfo.tel = user?.userTel;
+
+      await manager.save(UserInfo, userInfo);
+
+      return user;
+    });
   }
 
   async login(dto: UsersSearchDto) {
