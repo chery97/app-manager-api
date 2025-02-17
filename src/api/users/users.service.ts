@@ -23,12 +23,12 @@ export class UsersService {
   ) {}
 
   async findAll(pageSize: number, page: number) {
-    const [data, totalCnt] = await this.entityManager.findAndCount(Users, {
+    const [items, totalCnt] = await this.entityManager.findAndCount(Users, {
       take: pageSize,
       skip: (page - 1) * pageSize,
     });
     return {
-      data,
+      items,
       totalCnt,
     };
   }
