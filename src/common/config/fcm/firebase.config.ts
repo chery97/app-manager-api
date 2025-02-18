@@ -1,6 +1,7 @@
 import * as admin from 'firebase-admin';
 import { ServiceAccount } from 'firebase-admin';
 import sbgolfAccount from './json/firebase-service-account-sbgolf-test.json';
+import appPrototypeAccount from './json/firebase-service-account-app-prototype.json';
 import { HttpException, HttpStatus } from '@nestjs/common';
 
 // [Jay] 고객사별 Firebase 프로젝트 등록
@@ -10,6 +11,12 @@ const firebaseApps = {
       credential: admin.credential.cert(sbgolfAccount as ServiceAccount),
     },
     'sbgolfTest',
+  ),
+  appPrototype: admin.initializeApp(
+    {
+      credential: admin.credential.cert(appPrototypeAccount as ServiceAccount),
+    },
+    'app-prototype',
   ),
 };
 
