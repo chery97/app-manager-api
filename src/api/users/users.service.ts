@@ -13,6 +13,7 @@ import * as bcrypt from 'bcrypt';
 import { UsersCreateDto } from './dto/users-create.dto';
 import { UsersSearchDto } from './dto/users-search.dto';
 import { UserInfo } from '../user-info/entities/user-info.entity';
+import { ILike } from 'typeorm';
 
 @Injectable()
 export class UsersService {
@@ -22,10 +23,26 @@ export class UsersService {
     @InjectEntityManager() private readonly entityManager: EntityManager,
   ) {}
 
-  async findAll(pageSize: number, page: number) {
+  async findAll(params: {
+    pageSize?: string;
+    page?: string;
+    searchType?: string;
+    keyword?: string;
+  }) {
+    const pageSize = params.pageSize ? parseInt(params.pageSize) : 10;
+    const page = params?.page ? parseInt(params.page) : 1;
+    const searchType = params.searchType ?? '';
+    const keyword = params.keyword ?? '';
+
     const [items, totalCnt] = await this.entityManager.findAndCount(Users, {
       take: pageSize,
       skip: (page - 1) * pageSize,
+      where:
+        searchType === 'id'
+          ? { id: ILike(`%${keyword}%`) }
+          : searchType === 'userName'
+            ? { userName: ILike(`%${keyword}%`) }
+            : {},
     });
     let totalPage = totalCnt / pageSize;
 

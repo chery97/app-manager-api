@@ -7,10 +7,16 @@ export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @Get()
-  async findAll(@Query() query: { pageSize?: string; page?: string }) {
-    const pageSize = query?.pageSize ? parseInt(query.pageSize) : 10;
-    const page = query?.page ? parseInt(query.page) : 1;
-    return this.usersService.findAll(pageSize, page);
+  async findAll(
+    @Query()
+    params: {
+      pageSize?: string;
+      page?: string;
+      searchType?: string;
+      keyword?: string;
+    },
+  ) {
+    return this.usersService.findAll(params);
   }
 
   @Post('join')
