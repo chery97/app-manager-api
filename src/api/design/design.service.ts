@@ -1,11 +1,19 @@
 import { Injectable } from '@nestjs/common';
 import { CreateDesignDto } from './dto/create-design.dto';
 import { UpdateDesignDto } from './dto/update-design.dto';
+import { JwtService } from '@nestjs/jwt';
+import { ConfigService } from '@nestjs/config';
+import { InjectEntityManager } from '@nestjs/typeorm';
+import { EntityManager } from 'typeorm';
+import { Design } from './entities/design.entity';
 
 @Injectable()
 export class DesignService {
-  create(createDesignDto: CreateDesignDto) {
-    return 'This action adds a new design';
+  constructor(
+    @InjectEntityManager() private readonly entityManager: EntityManager,
+  ) {}
+  async create(dto: CreateDesignDto) {
+    await this.entityManager.save(Design, dto);
   }
 
   findAll() {
