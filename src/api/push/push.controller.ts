@@ -1,5 +1,6 @@
 import { Body, Controller, Post } from '@nestjs/common';
 import { PushService } from './push.service';
+import { PushSendDto } from './dto/push-send.dto';
 
 @Controller('push')
 export class PushController {
@@ -8,18 +9,8 @@ export class PushController {
   @Post()
   async sendPush(
     @Body()
-    body: {
-      appName: string;
-      token: string;
-      title: string;
-      message: string;
-    },
+    dto: PushSendDto,
   ) {
-    return this.pushService.sendPush(
-      body.appName,
-      body.token,
-      body.title,
-      body.message,
-    );
+    return this.pushService.sendPush(dto);
   }
 }
