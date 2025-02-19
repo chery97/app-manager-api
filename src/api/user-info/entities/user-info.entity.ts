@@ -1,18 +1,22 @@
 import {
-  PrimaryColumn,
   CreateDateColumn,
   UpdateDateColumn,
   Column,
   Entity,
+  PrimaryGeneratedColumn,
 } from 'typeorm';
 import { Exclude } from 'class-transformer';
 import { IsNumber, IsOptional, IsString } from 'class-validator';
 
 @Entity('gs_userInfo')
 export class UserInfo {
-  @PrimaryColumn()
+  @PrimaryGeneratedColumn()
   @IsNumber()
   sno: number;
+
+  @Column()
+  @IsNumber()
+  userNo: number;
 
   @Column()
   @IsString()

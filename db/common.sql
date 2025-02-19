@@ -13,3 +13,15 @@ CREATE TABLE gs_users (
     `updatedAt` TIMESTAMP on update CURRENT_TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '수정일' ,
     PRIMARY KEY (`sno`))
 ;
+
+-- 관리자 정보 테이블
+CREATE TABLE `gs_userInfo` (
+   `sno` int NOT NULL AUTO_INCREMENT,
+   `userNo` int DEFAULT NULL,
+   `name` varchar(100) NOT NULL,
+   `email` varchar(100) NOT NULL,
+   `tel` varchar(100) DEFAULT NULL,
+   `createdAt` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+   `updatedAt` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+   PRIMARY KEY (`sno`)
+)

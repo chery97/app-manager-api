@@ -2,7 +2,10 @@ import { IsInt, IsString } from 'class-validator';
 
 export class CreateUserInfoDto {
   @IsInt()
-  son: number;
+  sno: number;
+
+  @IsInt()
+  userNo: number;
 
   @IsString()
   name: string;

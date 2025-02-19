@@ -75,7 +75,7 @@ export class UsersService {
       const user = await manager.save(Users, dto);
 
       const userInfo = new UserInfo();
-      userInfo.sno = user?.sno;
+      userInfo.userNo = user?.sno;
       userInfo.name = user?.userName;
       userInfo.email = user?.userEmail;
       userInfo.tel = user?.userTel;
