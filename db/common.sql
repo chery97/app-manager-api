@@ -25,3 +25,14 @@ CREATE TABLE `gs_userInfo` (
    `updatedAt` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
    PRIMARY KEY (`sno`)
 )
+
+CREATE TABLE `gs_appDesign`
+(
+    `sno`       int NOT NULL AUTO_INCREMENT,
+    `userNo`    int NOT NULL,
+    `imgUrl`    varchar(500) DEFAULT NULL,
+    `duration`  int          DEFAULT NULL,
+    `createdAt` timestamp NULL DEFAULT NULL,
+    `updatedAt` timestamp NULL DEFAULT NULL,
+    PRIMARY KEY (`sno`)
+)

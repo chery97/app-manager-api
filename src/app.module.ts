@@ -7,6 +7,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { UsersModule } from './api/users/users.module';
 import { PushModule } from './api/push/push.module';
 import { UserInfoModule } from './api/user-info/user-info.module';
+import { DesignModule } from './api/design/design.module';
 
 @Module({
   imports: [
@@ -32,6 +33,7 @@ import { UserInfoModule } from './api/user-info/user-info.module';
     UsersModule,
     PushModule,
     UserInfoModule,
+    DesignModule,
   ],
   controllers: [AppController],
   providers: [AppService],
