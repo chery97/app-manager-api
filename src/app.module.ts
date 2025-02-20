@@ -8,6 +8,7 @@ import { UsersModule } from './api/users/users.module';
 import { PushModule } from './api/push/push.module';
 import { UserInfoModule } from './api/user-info/user-info.module';
 import { DesignModule } from './api/design/design.module';
+import { UploadModule } from './api/common/upload/upload.module';
 
 @Module({
   imports: [
@@ -34,6 +35,7 @@ import { DesignModule } from './api/design/design.module';
     PushModule,
     UserInfoModule,
     DesignModule,
+    UploadModule,
   ],
   controllers: [AppController],
   providers: [AppService],
