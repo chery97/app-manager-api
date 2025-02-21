@@ -1,4 +1,5 @@
 import { USER_TYPE } from '../../../common/enum/enum';
+import { UserInfo } from '../../user-info/entities/user-info.entity';
 import {
   CreateDateColumn,
   PrimaryColumn,
@@ -6,6 +7,8 @@ import {
   UpdateDateColumn,
   Column,
   Entity,
+  OneToOne,
+  JoinColumn,
 } from 'typeorm';
 import { Exclude } from 'class-transformer';
 import { IsEnum, IsNumber, IsOptional, IsString } from 'class-validator';
@@ -16,6 +19,10 @@ export class Users {
   @PrimaryColumn()
   @Exclude({ toClassOnly: true })
   sno: number;
+
+  @OneToOne(() => UserInfo, (userInfo) => userInfo.user)
+  @JoinColumn({ name: 'sno', referencedColumnName: 'userNo' })
+  userInfo: UserInfo;
 
   @Column()
   @IsString()

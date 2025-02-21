@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Query } from '@nestjs/common';
+import { Controller, Get, Post, Body, Query, Param } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { UsersSearchDto } from './dto/users-search.dto';
 
@@ -17,6 +17,11 @@ export class UsersController {
     },
   ) {
     return this.usersService.findAll(params);
+  }
+
+  @Get(':sno')
+  async findOne(@Param('sno') sno: number) {
+    return this.usersService.findOne(sno);
   }
 
   @Post('join')

@@ -57,6 +57,34 @@ export class UsersService {
     };
   }
 
+  async findOne(sno: number) {
+    const result = await this.entityManager
+      .createQueryBuilder(Users, 'users')
+      .leftJoinAndMapOne(
+        'users.userInfo',
+        UserInfo,
+        'userInfo',
+        'users.sno = userInfo.userNo',
+      )
+      .select([
+        'users.sno',
+        'users.id',
+        'users.partnerSno',
+        'users.userType',
+        'userInfo',
+      ])
+      .where('users.sno = :sno', { sno })
+      .getOne();
+    if (result) {
+      const { userInfo, ...userData } = result;
+      return {
+        ...userData,
+        ...userInfo,
+      };
+      return null;
+    }
+  }
+
   async join(dto: UsersCreateDto) {
     return this.entityManager.transaction(async (manager) => {
       const isExist = await manager.findOneBy(Users, {
