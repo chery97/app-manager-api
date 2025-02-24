@@ -23,7 +23,7 @@ export class UserInfoController {
   }
 
   @Patch(':sno')
-  update(@Param('sno') id: string, @Body() updateUserInfoDto: UpdateUserInfoDto) {
-    return this.userInfoService.update(+id, updateUserInfoDto);
+  async update(@Param('sno') userNo: string, @Body() dto: UpdateUserInfoDto) {
+    return await this.userInfoService.update(+userNo, dto);
   }
 }
