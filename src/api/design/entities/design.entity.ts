@@ -20,7 +20,11 @@ export class Design {
 
   @Column()
   @IsString()
-  imgUrl: string;
+  mobileImgUrl: string;
+
+  @Column()
+  @IsString()
+  tabletImgUrl: string;
 
   @Column()
   @IsString()

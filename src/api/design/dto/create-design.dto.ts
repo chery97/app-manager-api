@@ -2,7 +2,10 @@ import { IsNumber, IsString } from 'class-validator';
 
 export class CreateDesignDto {
   @IsString()
-  imgUrl: string;
+  mobileImgUrl: string;
+
+  @IsString()
+  tabletImgUrl: string;
 
   @IsNumber()
   duration: number;
