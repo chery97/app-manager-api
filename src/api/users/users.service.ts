@@ -137,7 +137,11 @@ export class UsersService {
       );
     }
 
-    const payload = { id: dto.id, password: dto.password };
+    const payload = {
+      id: dto.id,
+      password: dto.password,
+      userNo: memberData.sno,
+    };
 
     // [Jay] accessToken, refreshToken 생성
     const accessToken = this.jwtService.sign(payload, {

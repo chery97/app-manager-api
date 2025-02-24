@@ -1,9 +1,19 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  Req,
+} from '@nestjs/common';
 import { DesignService } from './design.service';
 import { CreateDesignDto } from './dto/create-design.dto';
 import { UpdateDesignDto } from './dto/update-design.dto';
+import { ICustomUserRequest } from '../../common/interface/ICustomUserRequest';
 
-@Controller('design')
+@Controller('app/design')
 export class DesignController {
   constructor(private readonly designService: DesignService) {}
 
@@ -13,13 +23,9 @@ export class DesignController {
   }
 
   @Get()
-  findAll() {
-    return this.designService.findAll();
-  }
-
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.designService.findOne(+id);
+  findOne(@Req() req: ICustomUserRequest) {
+    const userNo = req.userNo;
+    return this.designService.findOne(userNo);
   }
 
   @Patch(':id')

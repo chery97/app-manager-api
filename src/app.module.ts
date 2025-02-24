@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, RequestMethod } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ConfigModule, ConfigService } from '@nestjs/config';
@@ -9,6 +9,8 @@ import { PushModule } from './api/push/push.module';
 import { UserInfoModule } from './api/user-info/user-info.module';
 import { DesignModule } from './api/design/design.module';
 import { UploadModule } from './api/common/upload/upload.module';
+import { UserMiddleware } from './common/middleware/user.middleware';
+import { JwtModule, JwtService } from '@nestjs/jwt';
 
 @Module({
   imports: [
@@ -36,8 +38,19 @@ import { UploadModule } from './api/common/upload/upload.module';
     UserInfoModule,
     DesignModule,
     UploadModule,
+    JwtModule.register({
+      secret: process.env.JWT_SECRET || 'default-secret',
+      signOptions: { expiresIn: process.env.ACCESS_EXPIRE_IN },
+    }),
   ],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule {
+  constructor(private jwtService: JwtService) {}
+  configure(consumer: MiddlewareConsumer) {
+    consumer
+      .apply(UserMiddleware)
+      .forRoutes({ path: '/app/*', method: RequestMethod.ALL });
+  }
+}

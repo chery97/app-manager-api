@@ -18,8 +18,9 @@ export class DesignService {
     return `This action returns all design`;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} design`;
+  findOne(userNo: string) {
+    console.log(userNo);
+    return `This action returns a #${userNo} design`;
   }
 
   update(id: number, updateDesignDto: UpdateDesignDto) {
