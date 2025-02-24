@@ -4,6 +4,9 @@ export class PushSendDto {
   @IsString()
   appName: string; // 앱이름
 
+  @IsString()
+  osType: string; // os 타겟
+
   @IsOptional()
   @IsString()
   topic?: string; // 타겟 그룹
