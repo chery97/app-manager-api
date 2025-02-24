@@ -18,9 +18,10 @@ export class DesignService {
     return `This action returns all design`;
   }
 
-  findOne(userNo: string) {
-    console.log(userNo);
-    return `This action returns a #${userNo} design`;
+  async findOne(userNo: number) {
+    return await this.entityManager.find(Design, {
+      where: { userNo },
+    });
   }
 
   update(id: number, updateDesignDto: UpdateDesignDto) {

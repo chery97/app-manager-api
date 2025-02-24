@@ -23,9 +23,9 @@ export class DesignController {
   }
 
   @Get()
-  findOne(@Req() req: ICustomUserRequest) {
+  async findOne(@Req() req: ICustomUserRequest) {
     const userNo = req.userNo;
-    return this.designService.findOne(userNo);
+    return await this.designService.findOne(userNo);
   }
 
   @Patch(':id')
