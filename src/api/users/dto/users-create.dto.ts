@@ -12,9 +12,6 @@ export class UsersCreateDto {
   @IsOptional()
   managerType: USER_TYPE = USER_TYPE.PARTNER;
 
-  @IsNumber()
-  appNo: number;
-
   @IsString()
   userName: string;
 
