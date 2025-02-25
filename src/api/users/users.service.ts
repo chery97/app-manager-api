@@ -66,13 +66,7 @@ export class UsersService {
         'userInfo',
         'users.sno = userInfo.userNo',
       )
-      .select([
-        'users.sno',
-        'users.id',
-        'users.partnerSno',
-        'users.userType',
-        'userInfo',
-      ])
+      .select(['users.sno', 'users.id', 'users.userType', 'userInfo'])
       .where('users.sno = :sno', { sno })
       .getOne();
     if (result) {
