@@ -37,10 +37,6 @@ export class Users {
   userType: USER_TYPE = USER_TYPE.PARTNER;
 
   @Column()
-  @IsNumber()
-  partnerSno: number;
-
-  @Column()
   @IsString()
   userName: string;
 
