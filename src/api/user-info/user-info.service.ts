@@ -4,6 +4,7 @@ import { UpdateUserInfoDto } from './dto/update-user-info.dto';
 import { InjectEntityManager } from '@nestjs/typeorm';
 import { EntityManager } from 'typeorm';
 import { UserInfo } from './entities/user-info.entity';
+import { Users } from '../users/entities/users.entity';
 
 @Injectable()
 export class UserInfoService {
@@ -23,19 +24,25 @@ export class UserInfoService {
   }
 
   async update(userNo: number, dto: UpdateUserInfoDto) {
-    try {
-      const result = await this.entityManager.update(
+    return this.entityManager.transaction(async () => {
+      let result = await this.entityManager.update(
         UserInfo,
         { userNo },
         { name: dto.name, email: dto.email, tel: dto.tel },
       );
       if (result.affected === 0) {
-        throw new Error('No user found to update.');
+        throw new Error('No user-info found to update.');
+      }
+      result = await this.entityManager.update(
+        Users,
+        { sno: userNo },
+        { userName: dto.name, userEmail: dto.email, userTel: dto.tel },
+      );
+      if (result.affected === 0) {
+        throw new Error('No users found to update.');
       }
       return result;
-    } catch (error) {
-      throw new Error(error.message);
-    }
+    });
   }
 
   remove(id: number) {
