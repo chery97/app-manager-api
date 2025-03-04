@@ -41,6 +41,7 @@ export class PushService {
         title: dto.title,
         message: `${dto.message}\n${dto.pushDisagree || ''}`,
         url: dto.deepLink || '', // 딥링크 추가
+        priority: 'high',
         image:
           'https://esther2023.cdn-nhncommerce.com/data/editor/promotion/250219/96a3be3cf272e017046d1b2674a52bd3_155201.jpg', // 이미지 추가
       },
@@ -49,8 +50,7 @@ export class PushService {
     const androidMessage: Message = {
       ...baseMessage,
       android: {
-        priority: 'high',
-        notification: { channelId: 'default', sound: 'default' },
+        notification: { channelId: 'esthermall', sound: 'default' },
         directBootOk: true,
       },
     } as Message;
