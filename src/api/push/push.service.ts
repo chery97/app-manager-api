@@ -31,12 +31,6 @@ export class PushService {
   private createMessage(dto: PushSendDto): Message | Message[] {
     const baseMessage: Partial<Message> = {
       // [Jay] 수신동의 메시지 합쳐서 보냄
-      notification: {
-        title: dto.title,
-        body: `${dto.message}\n${dto.pushDisagree || ''}`,
-        image:
-          'https://esther2023.cdn-nhncommerce.com/data/editor/promotion/250219/96a3be3cf272e017046d1b2674a52bd3_155201.jpg', // 이미지 추가
-      } as any,
       data: {
         title: dto.title,
         message: `${dto.message}\n${dto.pushDisagree || ''}`,
@@ -50,13 +44,18 @@ export class PushService {
       ...baseMessage,
       android: {
         priority: 'high',
-        notification: { channelId: 'default', sound: 'default' },
         directBootOk: true,
       },
     } as Message;
 
     const iosMessage: Message = {
       ...baseMessage,
+      notification: {
+        title: dto.title,
+        body: `${dto.message}\n${dto.pushDisagree || ''}`,
+        image:
+          'https://esther2023.cdn-nhncommerce.com/data/editor/promotion/250219/96a3be3cf272e017046d1b2674a52bd3_155201.jpg', // 이미지 추가
+      } as any,
       apns: {
         payload: {
           aps: {
