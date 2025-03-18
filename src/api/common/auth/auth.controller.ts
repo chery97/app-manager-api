@@ -28,7 +28,7 @@ export class AuthController {
         .toString()
         .replace('Bearer', '')
         .trim();
-      return this.jwtService.verify(bearerToken + 'a', {
+      return this.jwtService.verify(bearerToken, {
         secret: process.env.ACCESS_SECRET_KEY,
       });
     } catch (error) {
