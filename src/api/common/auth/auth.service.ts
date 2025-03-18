@@ -14,6 +14,16 @@ export class AuthService {
   ) {}
   async refreshToken(refreshToken: string) {
     try {
+      const user = await this.entityManager.findOne(Users, {
+        where: {
+          refreshToken: refreshToken,
+        },
+      });
+
+      if (!user) {
+        throw new UnauthorizedException('유효하지 않은 RefreshToken입니다.');
+      }
+
       const decoded = this.jwtService.verify(refreshToken, {
         secret: this.configService.get<string>('REFRESH_SECRET_KEY'),
       });
@@ -29,24 +39,6 @@ export class AuthService {
       throw new UnauthorizedException(
         '유효하지 않은 RefreshToken입니다. 다시 로그인 해주세요',
       );
-    }
-  }
-
-  async getMyRefreshToken(refreshToken: string) {
-    try {
-      const user = await this.entityManager.findOne(Users, {
-        where: {
-          refreshToken: refreshToken,
-        },
-      });
-
-      if (!user) {
-        throw new UnauthorizedException('유효하지 않은 RefreshToken입니다.');
-      }
-
-      return await this.refreshToken(refreshToken);
-    } catch (error) {
-      throw new UnauthorizedException('RefreshToken이 유효하지 않습니다.');
     }
   }
 }
