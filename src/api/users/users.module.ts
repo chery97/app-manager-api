@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { UsersService } from './users.service';
-import { UsersController } from './users.controller';
+import { LogoutController, UsersController } from './users.controller';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
@@ -26,7 +26,7 @@ import { UserInfo } from '../user-info/entities/user-info.entity';
     }),
     TypeOrmModule.forFeature([Users, UserInfo]),
   ],
-  controllers: [UsersController],
+  controllers: [UsersController, LogoutController],
   providers: [UsersService, JwtStrategy, RefreshTokenStrategy],
 })
 export class UsersModule {}

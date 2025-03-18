@@ -156,4 +156,15 @@ export class UsersService {
       refresh_token: refreshToken,
     };
   }
+
+  async logout(userNo: number) {
+    const { affected } = await this.entityManager.update(
+      Users,
+      {
+        sno: userNo,
+      },
+      { refreshToken: '' },
+    );
+    return affected === 1;
+  }
 }
