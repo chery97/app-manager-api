@@ -33,9 +33,4 @@ export class UsersController {
   async login(@Body() dto: UsersSearchDto) {
     return this.usersService.login(dto);
   }
-
-  @Post('refresh')
-  async refresh(@Body('refreshToken') refreshToken: string) {
-    return this.usersService.refreshToken(refreshToken);
-  }
 }

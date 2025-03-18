@@ -1,9 +1,4 @@
-import {
-  HttpException,
-  HttpStatus,
-  Injectable,
-  UnauthorizedException,
-} from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import { InjectEntityManager } from '@nestjs/typeorm';
@@ -160,27 +155,5 @@ export class UsersService {
       access_token: accessToken,
       refresh_token: refreshToken,
     };
-  }
-
-  async refreshToken(refreshToken: string) {
-    try {
-      const decoded = this.jwtService.verify(refreshToken, {
-        secret: this.configService.get<string>('REFRESH_SECRET_KEY'),
-      });
-
-      const newAccessToken = this.jwtService.sign(
-        { username: decoded.username, sub: decoded.sub },
-        {
-          secret: this.configService.get<string>('ACCESS_SECRET_KEY'),
-          expiresIn: this.configService.get<string>('ACCESS_EXPIRE_IN'),
-        },
-      );
-
-      return { access_token: newAccessToken };
-    } catch (error) {
-      throw new UnauthorizedException(
-        'Refresh token expired. Please log in again.',
-      );
-    }
   }
 }

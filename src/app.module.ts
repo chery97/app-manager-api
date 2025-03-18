@@ -11,6 +11,7 @@ import { DesignModule } from './api/design/design.module';
 import { UploadModule } from './api/common/upload/upload.module';
 import { UserMiddleware } from './common/middleware/user.middleware';
 import { JwtModule, JwtService } from '@nestjs/jwt';
+import { AuthModule } from './api/common/auth/auth.module';
 
 @Module({
   imports: [
@@ -38,6 +39,7 @@ import { JwtModule, JwtService } from '@nestjs/jwt';
     UserInfoModule,
     DesignModule,
     UploadModule,
+    AuthModule,
     JwtModule.register({
       secret: process.env.JWT_SECRET || 'default-secret',
       signOptions: { expiresIn: process.env.ACCESS_EXPIRE_IN },
