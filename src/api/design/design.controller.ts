@@ -3,7 +3,7 @@ import {
   Get,
   Post,
   Body,
-  Patch,
+  Put,
   Param,
   Delete,
   Req,
@@ -32,9 +32,13 @@ export class DesignController {
     return await this.designService.findOne(userNo);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateDesignDto: UpdateDesignDto) {
-    return this.designService.update(+id, updateDesignDto);
+  @Put()
+  update(
+    @Req() req: ICustomUserRequest,
+    @Body() updateDesignDto: UpdateDesignDto,
+  ) {
+    updateDesignDto.userNo = req?.userNo;
+    return this.designService.update(updateDesignDto);
   }
 
   @Delete(':id')
