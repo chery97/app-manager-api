@@ -18,7 +18,11 @@ export class DesignController {
   constructor(private readonly designService: DesignService) {}
 
   @Post()
-  create(@Body() createDesignDto: CreateDesignDto) {
+  create(
+    @Req() req: ICustomUserRequest,
+    @Body() createDesignDto: CreateDesignDto,
+  ) {
+    createDesignDto.userNo = req?.userNo;
     return this.designService.create(createDesignDto);
   }
 
