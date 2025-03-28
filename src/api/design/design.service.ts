@@ -24,8 +24,19 @@ export class DesignService {
     });
   }
 
-  update(id: number, updateDesignDto: UpdateDesignDto) {
-    return `This action updates a #${id} design`;
+  update(updateDesignDto: UpdateDesignDto) {
+    const { userNo, mobileImgUrl, tabletImgUrl, duration } = updateDesignDto;
+    return this.entityManager.update(
+      Design,
+      {
+        userNo: userNo,
+      },
+      {
+        mobileImgUrl: mobileImgUrl,
+        tabletImgUrl: tabletImgUrl,
+        duration: duration,
+      },
+    );
   }
 
   remove(id: number) {
