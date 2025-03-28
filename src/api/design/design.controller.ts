@@ -3,10 +3,10 @@ import {
   Get,
   Post,
   Body,
-  Put,
   Param,
   Delete,
   Req,
+  Patch,
 } from '@nestjs/common';
 import { DesignService } from './design.service';
 import { CreateDesignDto } from './dto/create-design.dto';
@@ -32,7 +32,7 @@ export class DesignController {
     return await this.designService.findOne(userNo);
   }
 
-  @Put()
+  @Patch()
   update(
     @Req() req: ICustomUserRequest,
     @Body() updateDesignDto: UpdateDesignDto,

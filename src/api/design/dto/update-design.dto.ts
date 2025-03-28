@@ -1,4 +1,15 @@
-import { PartialType } from '@nestjs/mapped-types';
-import { CreateDesignDto } from './create-design.dto';
+import { IsNumber, IsString } from 'class-validator';
 
-export class UpdateDesignDto extends PartialType(CreateDesignDto) {}
+export class UpdateDesignDto {
+  @IsNumber()
+  userNo?: number;
+
+  @IsString()
+  mobileImgUrl?: string;
+
+  @IsString()
+  tabletImgUrl?: string;
+
+  @IsNumber()
+  duration?: number;
+}
