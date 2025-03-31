@@ -128,7 +128,7 @@ export class UsersService {
 
     const payload = {
       id: dto.id,
-      password: dto.password,
+      email: memberData.userEmail,
       userNo: memberData.sno,
     };
 

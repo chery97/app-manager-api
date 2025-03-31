@@ -29,7 +29,7 @@ export class AuthService {
       });
 
       return this.jwtService.sign(
-        { username: decoded.username, sub: decoded.sub },
+        { id: decoded.id, email: decoded.email, userNo: decoded.userNo },
         {
           secret: this.configService.get<string>('ACCESS_SECRET_KEY'),
           expiresIn: this.configService.get<string>('ACCESS_EXPIRE_IN'),

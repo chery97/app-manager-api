@@ -19,7 +19,6 @@ export class DesignService {
   }
 
   async findOne(userNo: number) {
-    console.log(userNo);
     return await this.entityManager.find(Design, {
       where: { userNo },
     });
