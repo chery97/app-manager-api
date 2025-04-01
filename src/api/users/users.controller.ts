@@ -60,7 +60,17 @@ export class UsersController {
 export class LogoutController {
   constructor(private readonly authService: UsersService) {}
   @Post('logout')
-  async logout(@Req() req: ICustomUserRequest) {
-    return await this.authService.logout(req.userNo);
+  async logout(
+    @Req() req: ICustomUserRequest,
+    @Res({ passthrough: true }) res: any,
+  ) {
+    const isLogout = await this.authService.logout(req.userNo);
+    res.clearCookie('refreshToken', {
+      path: '/',
+      httpOnly: true,
+      secure: false,
+      sameSite: 'Lax',
+    });
+    return isLogout;
   }
 }
