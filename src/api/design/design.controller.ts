@@ -7,7 +7,6 @@ import {
   Delete,
   Req,
   Patch,
-  Query,
 } from '@nestjs/common';
 import { DesignService } from './design.service';
 import { CreateDesignDto } from './dto/create-design.dto';
@@ -28,19 +27,6 @@ export class DesignController {
   }
 
   @Get()
-  async findAll(
-    @Query()
-    params: {
-      pageSize?: string;
-      page?: string;
-      searchType?: string;
-      keyword?: string;
-    },
-  ) {
-    return this.designService.findAll(params);
-  }
-
-  @Get(':sno')
   async findOne(@Req() req: ICustomUserRequest) {
     const userNo = req.userNo;
     return await this.designService.findOne(userNo);
