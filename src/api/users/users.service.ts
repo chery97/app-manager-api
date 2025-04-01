@@ -153,7 +153,6 @@ export class UsersService {
 
     return {
       access_token: accessToken,
-      refresh_token: refreshToken,
     };
   }
 
