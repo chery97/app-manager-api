@@ -1,4 +1,13 @@
-import { Controller, Get, Post, Body, Query, Param, Req } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Query,
+  Param,
+  Req,
+  Res,
+} from '@nestjs/common';
 import { UsersService } from './users.service';
 import { UsersSearchDto } from './dto/users-search.dto';
 import { ICustomUserRequest } from '../../common/interface/ICustomUserRequest';
@@ -31,8 +40,18 @@ export class UsersController {
   }
 
   @Post('login')
-  async login(@Body() dto: UsersSearchDto) {
-    return this.usersService.login(dto);
+  async login(@Body() dto: UsersSearchDto, @Res() res: any) {
+    const { access_token, refresh_token } = await this.usersService.login(dto);
+
+    res.cookie('refreshToken', refresh_token, {
+      httpOnly: true,
+      secure: false,
+      sameSite: 'lax',
+      path: '/',
+      maxAge: 24 * 60 * 60 * 1000,
+    });
+
+    return res.json(access_token);
   }
 }
 
