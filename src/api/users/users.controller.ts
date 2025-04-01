@@ -65,12 +65,14 @@ export class LogoutController {
     @Res({ passthrough: true }) res: any,
   ) {
     const isLogout = await this.authService.logout(req.userNo);
-    res.clearCookie('refreshToken', {
-      path: '/',
-      httpOnly: true,
-      secure: false,
-      sameSite: 'Lax',
-    });
+    if (isLogout) {
+      res.clearCookie('refreshToken', {
+        path: '/',
+        httpOnly: true,
+        secure: false,
+        sameSite: 'Lax',
+      });
+    }
     return isLogout;
   }
 }
