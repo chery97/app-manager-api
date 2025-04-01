@@ -42,16 +42,17 @@ export class UsersController {
   @Post('login')
   async login(@Body() dto: UsersSearchDto, @Res() res: any) {
     const { access_token, refresh_token } = await this.usersService.login(dto);
-
-    res.cookie('refreshToken', refresh_token, {
-      httpOnly: true,
-      secure: false,
-      sameSite: 'lax',
-      path: '/',
-      maxAge: 24 * 60 * 60 * 1000,
-    });
-
-    return res.json(access_token);
+    if (access_token && refresh_token) {
+      // @todo 운영시 옵션 값들 수정할 것 - aaron
+      res.cookie('refreshToken', refresh_token, {
+        httpOnly: true,
+        secure: false, // -> true
+        sameSite: 'lax', // -> or 'none'
+        path: '/',
+        maxAge: 24 * 60 * 60 * 1000,
+      });
+      return res.json(access_token);
+    }
   }
 }
 
