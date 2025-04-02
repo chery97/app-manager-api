@@ -101,6 +101,27 @@ export class AppManagerService {
     }
   }
 
+  async findOne(sno: number) {
+    const res = await this.entityManager.findOne(Apps, {
+      where: { sno },
+      relations: ['user'],
+    });
+    const formatDate = (date: Date) =>
+      date ? date.toISOString().replace('T', ' ').slice(0, 16) : null;
+
+    const result = {
+      sno: res.sno,
+      appName: res.appName,
+      appUrl: res.appUrl,
+      appDesc: res.appDesc,
+      createdAt: formatDate(res.createdAt),
+      updateDate: formatDate(res.updatedAt),
+      userId: res.user.id,
+      userName: res.user.userName,
+    };
+    return result;
+  }
+
   create(createAppDto: CreateAppDto) {
     return this.entityManager.transaction(
       async (transactionalEntityManager) => {
