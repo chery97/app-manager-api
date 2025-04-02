@@ -35,3 +35,14 @@ CREATE TABLE `gs_appDesign`
     `updatedAt` timestamp NULL DEFAULT NULL,
     PRIMARY KEY (`sno`)
 )
+
+-- 앱 하단탭 디자인 테이블
+CREATE TABLE gs_appTabDesign (
+   sno INT auto_increment NOT NULL,
+   userNo INT NULL,
+   appId INT NOT NULL COMMENT '앱ID',
+   tabData TEXT NULL COMMENT '하단탭 json 데이터',
+   createdAt TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
+   updatedAt TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+   PRIMARY KEY (`sno`)
+)
