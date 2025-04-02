@@ -9,6 +9,8 @@ import { RefreshTokenStrategy } from '../../../auth/strategy/refresh.strategy';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Users } from './entities/users.entity';
 import { UserInfo } from '../user-info/entities/user-info.entity';
+import { UserToken } from '../user-token/entities/user-token.entity';
+import { UserTokenModule } from '../user-token/user-token.module';
 
 @Module({
   imports: [
@@ -24,7 +26,8 @@ import { UserInfo } from '../user-info/entities/user-info.entity';
         }, // Access Token 만료시간
       }),
     }),
-    TypeOrmModule.forFeature([Users, UserInfo]),
+    TypeOrmModule.forFeature([Users, UserInfo, UserToken]),
+    UserTokenModule,
   ],
   controllers: [UsersController, LogoutController],
   providers: [UsersService, JwtStrategy, RefreshTokenStrategy],

@@ -11,6 +11,7 @@ import {
 import { UsersService } from './users.service';
 import { UsersSearchDto } from './dto/users-search.dto';
 import { ICustomUserRequest } from '../../../common/interface/ICustomUserRequest';
+import { v4 as uuid4 } from 'uuid';
 
 @Controller('users')
 export class UsersController {
@@ -40,11 +41,23 @@ export class UsersController {
   }
 
   @Post('login')
-  async login(@Body() dto: UsersSearchDto, @Res() res: any) {
-    const { access_token, refresh_token } = await this.usersService.login(dto);
+  async login(@Body() dto: UsersSearchDto, @Res() res: any, @Req() req: any) {
+    const uuid = uuid4();
+    const { access_token, refresh_token } = await this.usersService.login(
+      dto,
+      req,
+      uuid,
+    );
     if (access_token && refresh_token) {
       // @todo 운영시 옵션 값들 수정할 것 - aaron
       res.cookie('refreshToken', refresh_token, {
+        httpOnly: true,
+        secure: false, // -> true
+        sameSite: 'lax', // -> or 'none'
+        path: '/',
+        maxAge: 24 * 60 * 60 * 1000,
+      });
+      res.cookie('uuid', uuid, {
         httpOnly: true,
         secure: false, // -> true
         sameSite: 'lax', // -> or 'none'
@@ -61,12 +74,21 @@ export class LogoutController {
   constructor(private readonly authService: UsersService) {}
   @Post('logout')
   async logout(
-    @Req() req: ICustomUserRequest,
+    @Req() req: ICustomUserRequest & { cookies: any },
     @Res({ passthrough: true }) res: any,
   ) {
-    const isLogout = await this.authService.logout(req.userNo);
+    const isLogout = await this.authService.logout(
+      req.userNo,
+      req.cookies.uuid,
+    );
     if (isLogout) {
       res.clearCookie('refreshToken', {
+        path: '/',
+        httpOnly: true,
+        secure: false,
+        sameSite: 'Lax',
+      });
+      res.clearCookie('uuid', {
         path: '/',
         httpOnly: true,
         secure: false,

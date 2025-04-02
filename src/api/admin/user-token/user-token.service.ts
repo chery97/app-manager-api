@@ -1,27 +1,19 @@
 import { Injectable } from '@nestjs/common';
 import { CreateUserTokenDto } from './dto/create-user-token.dto';
-import { UpdateUserTokenDto } from './dto/update-user-token.dto';
+import { InjectEntityManager } from '@nestjs/typeorm';
+import { EntityManager } from 'typeorm';
+import { UserToken } from './entities/user-token.entity';
 
 @Injectable()
 export class UserTokenService {
-  create(createUserTokenDto: CreateUserTokenDto) {
-    console.log(createUserTokenDto);
-    return 'This action adds a new userToken';
+  constructor(
+    @InjectEntityManager() private readonly entityManager: EntityManager,
+  ) {}
+  async create(createUserTokenDto: CreateUserTokenDto) {
+    return this.entityManager.save(UserToken, createUserTokenDto);
   }
 
-  findAll() {
-    return `This action returns all userToken`;
-  }
-
-  findOne(id: number) {
-    return `This action returns a #${id} userToken`;
-  }
-
-  update(id: number, updateUserTokenDto: UpdateUserTokenDto) {
-    return `This action updates a #${id} userToken`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} userToken`;
+  async remove(userNo: number, uuid: string) {
+    return this.entityManager.delete(UserToken, { userNo, uuid });
   }
 }

@@ -9,12 +9,14 @@ import { UsersCreateDto } from './dto/users-create.dto';
 import { UsersSearchDto } from './dto/users-search.dto';
 import { UserInfo } from '../user-info/entities/user-info.entity';
 import { ILike } from 'typeorm';
+import { UserTokenService } from '../user-token/user-token.service';
 
 @Injectable()
 export class UsersService {
   constructor(
     private jwtService: JwtService,
     private configService: ConfigService,
+    private userTokenService: UserTokenService,
     @InjectEntityManager() private readonly entityManager: EntityManager,
   ) {}
 
@@ -103,7 +105,7 @@ export class UsersService {
     });
   }
 
-  async login(dto: UsersSearchDto) {
+  async login(dto: UsersSearchDto, req: any, uuid: string) {
     const memberData = await this.entityManager.findOneBy(Users, {
       id: dto.id,
     });
@@ -151,20 +153,24 @@ export class UsersService {
       { refreshToken },
     );
 
+    const createUserTokenParams = {
+      userNo: memberData.sno,
+      deviceInfo: req.headers['user-agent'],
+      ip: req.ip,
+      uuid: uuid,
+      refreshToken: refreshToken,
+    };
+
+    await this.userTokenService.create(createUserTokenParams);
+
     return {
       access_token: accessToken,
       refresh_token: refreshToken,
     };
   }
 
-  async logout(userNo: number) {
-    const { affected } = await this.entityManager.update(
-      Users,
-      {
-        sno: userNo,
-      },
-      { refreshToken: '' },
-    );
+  async logout(userNo: number, uuid: string) {
+    const { affected } = await this.userTokenService.remove(userNo, uuid);
     return affected === 1;
   }
 }

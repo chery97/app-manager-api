@@ -11,5 +11,8 @@ export class CreateUserTokenDto {
   ip: string;
 
   @IsString()
+  uuid: string;
+
+  @IsString()
   refreshToken: string;
 }
