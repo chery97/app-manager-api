@@ -7,12 +7,13 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { UsersModule } from './api/admin/users/users.module';
 import { PushModule } from './api/admin/push/push.module';
 import { UserInfoModule } from './api/admin/user-info/user-info.module';
-import { DesignModule } from './api/admin/design/design.module';
 import { UploadModule } from './api/admin/common/upload/upload.module';
 import { UserMiddleware } from './common/middleware/user.middleware';
 import { JwtModule, JwtService } from '@nestjs/jwt';
 import { AuthModule } from './api/admin/common/auth/auth.module';
 import { AppManagerModule } from './api/admin/app-manager/app-manager.module';
+import { DesignModule } from './api/admin/design/design.module';
+import { DesignModule as AppDesignModule } from './api/app/design/design.module';
 
 @Module({
   imports: [
@@ -39,6 +40,7 @@ import { AppManagerModule } from './api/admin/app-manager/app-manager.module';
     PushModule,
     UserInfoModule,
     DesignModule,
+    AppDesignModule,
     UploadModule,
     AuthModule,
     AppManagerModule,
