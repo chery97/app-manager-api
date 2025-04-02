@@ -12,6 +12,7 @@ import { DesignService } from './design.service';
 import { CreateDesignDto } from './dto/create-design.dto';
 import { UpdateDesignDto } from './dto/update-design.dto';
 import { ICustomUserRequest } from '../../common/interface/ICustomUserRequest';
+import { UpdateTabDesignDto } from './dto/update-tab-design.dto';
 
 @Controller('app/design')
 export class DesignController {
@@ -44,5 +45,25 @@ export class DesignController {
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.designService.remove(+id);
+  }
+
+  @Get('/footer/:appId')
+  async findFooter(
+    @Req() req: ICustomUserRequest,
+    @Param('appId') appId: number,
+  ) {
+    const userNo = req.userNo;
+    return await this.designService.findTabList(userNo, appId);
+  }
+
+  @Patch('/footer/:appId')
+  updateTabList(
+    @Req() req: ICustomUserRequest,
+    @Param('appId') appId: number,
+    @Body() updateTabDesignDto: UpdateTabDesignDto,
+  ) {
+    updateTabDesignDto.userNo = req.userNo;
+    updateTabDesignDto.appId = appId;
+    return this.designService.updateTabList(updateTabDesignDto);
   }
 }
