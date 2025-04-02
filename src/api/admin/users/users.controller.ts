@@ -10,7 +10,7 @@ import {
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { UsersSearchDto } from './dto/users-search.dto';
-import { ICustomUserRequest } from '../../common/interface/ICustomUserRequest';
+import { ICustomUserRequest } from '../../../common/interface/ICustomUserRequest';
 
 @Controller('users')
 export class UsersController {

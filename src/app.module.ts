@@ -4,15 +4,15 @@ import { AppService } from './app.service';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import * as process from 'process';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { UsersModule } from './api/users/users.module';
-import { PushModule } from './api/push/push.module';
-import { UserInfoModule } from './api/user-info/user-info.module';
-import { DesignModule } from './api/design/design.module';
-import { UploadModule } from './api/common/upload/upload.module';
+import { UsersModule } from './api/admin/users/users.module';
+import { PushModule } from './api/admin/push/push.module';
+import { UserInfoModule } from './api/admin/user-info/user-info.module';
+import { DesignModule } from './api/admin/design/design.module';
+import { UploadModule } from './api/admin/common/upload/upload.module';
 import { UserMiddleware } from './common/middleware/user.middleware';
 import { JwtModule, JwtService } from '@nestjs/jwt';
-import { AuthModule } from './api/common/auth/auth.module';
-import { AppManagerModule } from './api/app-manager/app-manager.module';
+import { AuthModule } from './api/admin/common/auth/auth.module';
+import { AppManagerModule } from './api/admin/app-manager/app-manager.module';
 
 @Module({
   imports: [

@@ -1,5 +1,5 @@
-import { IsEnum, IsNumber, IsOptional, IsString } from 'class-validator';
-import { USER_TYPE } from '../../../common/enum/enum';
+import { IsEnum, IsOptional, IsString } from 'class-validator';
+import { USER_TYPE } from '../../../../common/enum/enum';
 
 export class UsersCreateDto {
   @IsString()

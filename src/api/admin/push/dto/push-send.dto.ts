@@ -4,7 +4,7 @@ import {
   OS_Type,
   PUSH_PURPOSE,
   SCHEDULE_TYPE,
-} from '../../../common/enum/enum';
+} from '../../../../common/enum/enum';
 
 export class PushSendDto {
   @IsString()

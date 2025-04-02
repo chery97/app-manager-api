@@ -1,5 +1,5 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import { getFirebaseApp } from '../../common/config/fcm/firebase.config';
+import { getFirebaseApp } from '../../../common/config/fcm/firebase.config';
 import { Message } from 'firebase-admin/messaging';
 import { PushSendDto } from './dto/push-send.dto';
 
@@ -61,6 +61,7 @@ export class PushService {
           aps: {
             sound: 'default',
             'content-available': 1,
+            'mutable-content': 1,
             threadId: 'com.geekstudio.appprototype',
           },
         },

@@ -1,4 +1,4 @@
-import { USER_TYPE } from '../../../common/enum/enum';
+import { USER_TYPE } from '../../../../common/enum/enum';
 import { UserInfo } from '../../user-info/entities/user-info.entity';
 import {
   CreateDateColumn,
@@ -11,7 +11,7 @@ import {
   JoinColumn,
 } from 'typeorm';
 import { Exclude } from 'class-transformer';
-import { IsEnum, IsNumber, IsOptional, IsString } from 'class-validator';
+import { IsEnum, IsOptional, IsString } from 'class-validator';
 
 @Entity('gs_users')
 export class Users {
