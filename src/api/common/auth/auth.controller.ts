@@ -28,9 +28,11 @@ export class AuthController {
         .toString()
         .replace('Bearer', '')
         .trim();
-      return this.jwtService.verify(bearerToken, {
+      const userData = this.jwtService.verify(bearerToken, {
         secret: process.env.ACCESS_SECRET_KEY,
       });
+
+      if (Object.values(userData).length > 0) return true;
     } catch (error) {
       const message = {
         'invalid token': '유효하지 않은 토큰입니다.',
