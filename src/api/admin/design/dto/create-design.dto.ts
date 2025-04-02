@@ -4,6 +4,9 @@ export class CreateDesignDto {
   @IsNumber()
   userNo: number;
 
+  @IsNumber()
+  appId: number;
+
   @IsString()
   mobileImgUrl: string;
 

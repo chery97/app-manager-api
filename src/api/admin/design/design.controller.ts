@@ -27,10 +27,10 @@ export class DesignController {
     return this.designService.create(createDesignDto);
   }
 
-  @Get()
-  async findOne(@Req() req: ICustomUserRequest) {
+  @Get('/intro/:appId')
+  async findOne(@Req() req: ICustomUserRequest, @Param('appId') appId: number) {
     const userNo = req.userNo;
-    return await this.designService.findOne(userNo);
+    return await this.designService.findOne(userNo, appId);
   }
 
   @Patch()

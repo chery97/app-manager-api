@@ -19,6 +19,10 @@ export class Design {
   userNo: number;
 
   @Column()
+  @IsNumber()
+  appId: number;
+
+  @Column()
   @IsString()
   mobileImgUrl: string;
 

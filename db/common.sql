@@ -29,6 +29,7 @@ CREATE TABLE `gs_appDesign`
 (
     `sno`       int NOT NULL AUTO_INCREMENT,
     `userNo`    int NOT NULL,
+    `appId`    int NOT NULL,
     `imgUrl`    varchar(500) DEFAULT NULL,
     `duration`  int          DEFAULT NULL,
     `createdAt` timestamp NULL DEFAULT NULL,

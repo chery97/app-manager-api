@@ -16,9 +16,10 @@ export class DesignService {
     return this.entityManager.save(Design, createDesignDto);
   }
 
-  async findOne(userNo: number) {
+  async findOne(userNo: number, appId: number) {
+    console.log(userNo, appId);
     return await this.entityManager.find(Design, {
-      where: { userNo },
+      where: { userNo, appId },
     });
   }
 
