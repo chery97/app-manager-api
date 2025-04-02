@@ -17,18 +17,19 @@ export class DesignService {
   }
 
   async findOne(userNo: number, appId: number) {
-    console.log(userNo, appId);
     return await this.entityManager.find(Design, {
       where: { userNo, appId },
     });
   }
 
   update(updateDesignDto: UpdateDesignDto) {
-    const { userNo, mobileImgUrl, tabletImgUrl, duration } = updateDesignDto;
+    const { userNo, appId, mobileImgUrl, tabletImgUrl, duration } =
+      updateDesignDto;
     return this.entityManager.update(
       Design,
       {
         userNo: userNo,
+        appId: appId,
       },
       {
         mobileImgUrl: mobileImgUrl,
