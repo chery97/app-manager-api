@@ -18,7 +18,8 @@ export class AuthController {
   @Post('refresh')
   async refreshToken(@Req() req: any) {
     const refreshToken = req.cookies.refreshToken;
-    return await this.authService.refreshToken(refreshToken);
+    const uuid = req.cookies.uuid;
+    return await this.authService.refreshToken(uuid);
   }
 
   @Post('token-check')

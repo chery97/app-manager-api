@@ -50,13 +50,6 @@ export class UsersController {
     );
     if (access_token && refresh_token) {
       // @todo 운영시 옵션 값들 수정할 것 - aaron
-      res.cookie('refreshToken', refresh_token, {
-        httpOnly: true,
-        secure: false, // -> true
-        sameSite: 'lax', // -> or 'none'
-        path: '/',
-        maxAge: 24 * 60 * 60 * 1000,
-      });
       res.cookie('uuid', uuid, {
         httpOnly: true,
         secure: false, // -> true
@@ -82,12 +75,6 @@ export class LogoutController {
       req.cookies.uuid,
     );
     if (isLogout) {
-      res.clearCookie('refreshToken', {
-        path: '/',
-        httpOnly: true,
-        secure: false,
-        sameSite: 'Lax',
-      });
       res.clearCookie('uuid', {
         path: '/',
         httpOnly: true,

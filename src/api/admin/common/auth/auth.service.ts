@@ -4,6 +4,7 @@ import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import { InjectEntityManager } from '@nestjs/typeorm';
 import { EntityManager } from 'typeorm';
+import { UserToken } from '../../user-token/entities/user-token.entity';
 
 @Injectable()
 export class AuthService {
@@ -12,11 +13,11 @@ export class AuthService {
     private configService: ConfigService,
     @InjectEntityManager() private readonly entityManager: EntityManager,
   ) {}
-  async refreshToken(refreshToken: string) {
+  async refreshToken(uuid: string) {
     try {
-      const user = await this.entityManager.findOne(Users, {
+      const user = await this.entityManager.findOne(UserToken, {
         where: {
-          refreshToken: refreshToken,
+          uuid: uuid,
         },
       });
 
@@ -24,7 +25,7 @@ export class AuthService {
         throw new UnauthorizedException('유효하지 않은 RefreshToken입니다.');
       }
 
-      const decoded = this.jwtService.verify(refreshToken, {
+      const decoded = this.jwtService.verify(user.refreshToken, {
         secret: this.configService.get<string>('REFRESH_SECRET_KEY'),
       });
 
