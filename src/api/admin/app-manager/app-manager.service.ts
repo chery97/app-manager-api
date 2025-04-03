@@ -116,7 +116,7 @@ export class AppManagerService {
       appUrl: res.appUrl,
       appDesc: res.appDesc,
       createdAt: formatDate(res.createdAt),
-      updateDate: formatDate(res.updatedAt),
+      updatedAt: formatDate(res.updatedAt),
       userId: res.user.id,
       userName: res.user.userName,
     };
