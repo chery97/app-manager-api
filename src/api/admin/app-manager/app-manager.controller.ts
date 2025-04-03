@@ -1,7 +1,17 @@
-import { Body, Controller, Get, Param, Post, Query, Req } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Patch,
+  Post,
+  Query,
+  Req,
+} from '@nestjs/common';
 import { AppManagerService } from './app-manager.service';
 import { ICustomUserRequest } from '../../../common/interface/ICustomUserRequest';
 import { CreateAppDto } from './dto/create-app.dto';
+import { UpdateAppDto } from './dto/update-app.dto';
 
 @Controller('app/app-manager')
 export class AppManagerController {
@@ -32,5 +42,11 @@ export class AppManagerController {
   create(@Req() req: ICustomUserRequest, @Body() createAppDto: CreateAppDto) {
     createAppDto.userNo = req?.userNo;
     return this.appManagerService.create(createAppDto);
+  }
+
+  @Patch()
+  update(@Req() req: ICustomUserRequest, @Body() updateAppDto: UpdateAppDto) {
+    updateAppDto.userNo = req?.userNo;
+    return this.appManagerService.update(updateAppDto);
   }
 }

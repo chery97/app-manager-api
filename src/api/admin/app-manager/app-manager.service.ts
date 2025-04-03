@@ -9,6 +9,7 @@ import { CreateDesignDto } from '../design/dto/create-design.dto';
 import { UpdateTabDesignDto } from '../design/dto/update-tab-design.dto';
 import { Users } from '../users/entities/users.entity';
 import { TabDesign } from '../design/entities/tabDesign.entity';
+import { UpdateAppDto } from './dto/update-app.dto';
 
 @Injectable()
 export class AppManagerService {
@@ -157,6 +158,22 @@ export class AppManagerService {
           }
           throw error;
         }
+      },
+    );
+  }
+
+  update(updateAppDto: UpdateAppDto) {
+    const { sno, userNo, appName, appUrl, appDesc } = updateAppDto;
+    return this.entityManager.update(
+      Apps,
+      {
+        sno: sno,
+        userNo: userNo,
+      },
+      {
+        appName: appName,
+        appUrl: appUrl,
+        appDesc: appDesc,
       },
     );
   }
